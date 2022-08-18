@@ -24,7 +24,7 @@ cv2.destroyAllWindows()
 img_athr = cv2.adaptiveThreshold(img_con, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 15, 3)
 cv2.imshow('Adaptive Threshold', img_athr)
 ###Normal Threshold
-img_nthr = cv2.threshold(img_con, 25, 255, cv2.THRESH_TOZERO)[1]
+img_nthr = cv2.threshold(img_con, 50, 255, cv2.THRESH_TOZERO)[1]
 cv2.imshow('Normal Threshold', img_nthr)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -38,7 +38,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 #Image to plot
-img_plot = img_opn
+img_plot = img_thr
 
 #Plot Histogram of image
 #plt.hist(img_plot.ravel(), 256, [0,256], color='crimson')
