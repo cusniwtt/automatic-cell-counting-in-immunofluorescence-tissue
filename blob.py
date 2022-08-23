@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import time
 
 #Read the image
-img = cv2.imread('Dataset/Cell_test.jpeg', 0)
+img = cv2.imread('Immunofluorescence images/1H_Nrf2_No_ADT_1_DAPI.tif', 0)
 print(img.shape)
 cv2.imshow('Original', img)
 cv2.waitKey(0)
@@ -32,7 +32,7 @@ img_gthr = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 cv2.imshow('Gaussian Threshold', img_gthr)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-img_thr = img_nthr
+img_thr = img_gthr
 
 #Set Opening
 kernel = np.ones((2,2), np.uint8)
@@ -61,8 +61,8 @@ params = cv2.SimpleBlobDetector_Params()
 
 #Set Filter by Area
 params.filterByArea = True
-params.minArea = 250
-params.maxArea = 100000
+params.minArea = 100
+params.maxArea = 1000
 
 #Set filter by Color (0 = black, 255 = white)
 params.filterByColor = False
