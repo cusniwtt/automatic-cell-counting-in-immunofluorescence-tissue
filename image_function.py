@@ -25,87 +25,54 @@ def imgSlicer(img, type = 'd8'):
     return img_slice
 
 # Apply contrast stretching
-def contrastAbs(img, alpha = 2, beta = -1, timer = 0):
+def contrastAbs(img, alpha = 2, beta = -1):
     img_con = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
-    cv2.imshow('Contrast', img_con)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_con
 
 # Add more sharp in image
-def sharpening(img, timer = 0):
+def sharpening(img):
     kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
     im = cv2.filter2D(img, -1, kernel)
-    cv2.imshow('Sharpening', im)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return im
 
 # Set Threshold
 ### Adaptive Threshold
-def adaptiveThresholding(img, blockSize = 15, C = 3, timer = 0):
+def adaptiveThresholding(img, blockSize = 15, C = 3):
     img_athr = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, blockSize, C)
-    cv2.imshow('Adaptive Threshold', img_athr)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_athr
 ### Normal Threshold
-def normalThresholding(img, thresh = 127, maxval = 255, type = cv2.THRESH_TOZERO, timer = 0):
+def normalThresholding(img, thresh = 127, maxval = 255, type = cv2.THRESH_TOZERO):
     img_nthr = cv2.threshold(img, thresh, maxval, type)[1]
-    cv2.imshow('Normal Threshold', img_nthr)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_nthr
 ### Gausian blur + Osthu threshold
-def gaussianBlur(img, ksize = 5, sigmaX = 0, timer = 0):
+def gaussianBlur(img, ksize = 5, sigmaX = 0):
     blur = cv2.GaussianBlur(img, (ksize,ksize), sigmaX)
-    cv2.imshow('Gaussian Blur', blur)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return blur
-def ostuThresholding(img, minVal = 24, maxVal = 255, type = cv2.THRESH_BINARY + cv2.THRESH_OTSU, timer = 0):
+def ostuThresholding(img, minVal = 24, maxVal = 255, type = cv2.THRESH_BINARY + cv2.THRESH_OTSU):
     ostu = cv2.threshold(img, minVal, maxVal, type)[1]
-    cv2.imshow('Ostu Threshold', ostu)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return ostu
 ### CLAHE method
-def clahe(img, clipLimit=5.0, tileGridSize=(8,8), timer = 0):
+def clahe(img, clipLimit=5.0, tileGridSize=(8,8)):
     clahe = cv2.createCLAHE(clipLimit=clipLimit, tileGridSize=tileGridSize)
     img_clahe = clahe.apply(img)
-    cv2.imshow('CLAHE', img_clahe)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_clahe
 
 # Morphological Operations
 ### Erosion
-def morp_op_erosion(img, kernel = np.ones((3,3), np.uint8), iter = 1, timer = 0):
+def morp_op_erosion(img, kernel = np.ones((3,3), np.uint8), iter = 1):
     img_ero = cv2.erode(img, kernel, iterations = iter)
-    cv2.imshow('Erosion', img_ero)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_ero
 ### Dilation
-def morp_op_dilation(img, kernel = np.ones((3,3), np.uint8), iter = 1, timer = 0):
+def morp_op_dilation(img, kernel = np.ones((3,3), np.uint8), iter = 1):
     img_dil = cv2.dilate(img, kernel, iterations = iter)
-    cv2.imshow('Dilation', img_dil)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_dil
 ### Set Opening
-def morp_op_opening(img, kernel = np.ones((9,9), np.uint8), timer = 0):
+def morp_op_opening(img, kernel = np.ones((9,9), np.uint8)):
     img_opn = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
-    cv2.imshow('Opening', img_opn)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_opn
 ### Set Closing
-def morp_op_closing(img, kernel = np.ones((9,9), np.uint8), timer = 0):
+def morp_op_closing(img, kernel = np.ones((9,9), np.uint8)):
     img_cls = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
-    cv2.imshow('Closing', img_cls)
-    cv2.waitKey(timer)
-    cv2.destroyAllWindows()
     return img_cls
 
 # Plot Histogram of image

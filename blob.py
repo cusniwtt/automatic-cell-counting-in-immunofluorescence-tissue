@@ -11,14 +11,11 @@ for p in paths:
     path = 'Immunofluorescence images/' + p
     img = cv2.imread(path, 0)
     print(img.shape)
-    cv2.imshow('Original', img)
-    cv2.waitKey(100)
-    cv2.destroyAllWindows()
 
-    img = clahe(img, clipLimit=8.0, timer=100)
-    img = gaussianBlur(img, ksize=3, sigmaX=1, timer=100)
-    img = sharpening(img, timer=100)
-    img_list = imgSlicer(img, timer=100)
+    img = clahe(img, clipLimit=8.0, tileGridSize=(8,8))
+    img = gaussianBlur(img, ksize=3, sigmaX=1)
+    img = sharpening(img)
+    img_list = imgSlicer(img)
 
     no = 0
     for i in range(len(img_list)):
@@ -26,7 +23,6 @@ for p in paths:
         no = no + key_no
         #Draw blobs on the image
         img_with_blob = cv2.drawKeypoints(img_list[i], keypoint, None, (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        cv2.imshow('Cell_with_Keypoints', img_with_blob)
-        cv2.waitKey(30)
-        cv2.destroyAllWindows()
+        #Save the image
+        cv2.imwrite('Blob detected/' + p[:-4] + '_' + str(i) + '.jpg', img_with_blob)
     print('Total number of cells: ', no)
