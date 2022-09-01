@@ -11,7 +11,9 @@ if __name__ == '__main__':
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    img = clahe(img)
-    img = opening(img)
-    imgSlicer(img)
-    img = blobDetection(img)
+    img = clahe(img, clipLimit=8.0)
+    img = gaussianBlur(img, ksize=3, sigmaX=1)
+    img = sharpening(img)
+    img_list = imgSlicer(img)
+    for i in range(len(img_list)):
+        blobDetection(img_list[i])

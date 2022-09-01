@@ -3,27 +3,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Image slicer
-def imgSlicer(img):
+def imgSlicer(img, type = 'd8'):
     # Slice ratio (base on 1920x1536)
     slice_ratio = {
-        'd1': [1920, 1536],
-        'd2': [960, 768],
-        'd4': [480, 384],
-        'd8': [240, 192],
-        'd16': [120, 96],
-        'd32': [60, 48],
-        'd64': [30, 24],
+        'd2': [960, 768, 2],
+        'd4': [480, 384, 4],
+        'd8': [240, 192, 8],
+        'd16': [120, 96, 16],
     }
     # Slice image
-    img_d1 = img[100:slice_ratio['d1'][1], 100:slice_ratio['d1'][0]]
-    img_d4 = img[100:slice_ratio['d4'][1], 100:slice_ratio['d4'][0]]
-    img_d8 = img[300:300+slice_ratio['d8'][1], 300:300+slice_ratio['d8'][0]]
-    # Show image
-    cv2.imshow('d1', img_d1)
-    cv2.imshow('d4', img_d4)
-    cv2.imshow('d8', img_d8)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    img_slice = []
+    x = 0
+    y = 0
+    for i in range(0, slice_ratio[type][2]):
+        for j in range(0, slice_ratio[type][2]):
+            temp = img[y:y+slice_ratio[type][1]-1, x:x+slice_ratio[type][0]-1]
+            img_slice.append(temp)
+            x += slice_ratio[type][0]
+        x = 0
+        y += slice_ratio[type][1]
+    return img_slice
 
 # Apply contrast stretching
 def contrastAbs(img, alpha = 2, beta = -1):
@@ -32,6 +31,15 @@ def contrastAbs(img, alpha = 2, beta = -1):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     return img_con
+
+# Add more sharp in image
+def sharpening(img):
+    kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+    im = cv2.filter2D(img, -1, kernel)
+    cv2.imshow('Sharpening', im)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return im
 
 # Set Threshold
 ### Adaptive Threshold
@@ -55,7 +63,7 @@ def gaussianBlur(img, ksize = 5, sigmaX = 0):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     return blur
-def ostuThresholding(img, minVal = 0, maxVal = 255, type = cv2.THRESH_BINARY + cv2.THRESH_OTSU):
+def ostuThresholding(img, minVal = 24, maxVal = 255, type = cv2.THRESH_BINARY + cv2.THRESH_OTSU):
     ostu = cv2.threshold(img, minVal, maxVal, type)[1]
     cv2.imshow('Ostu Threshold', ostu)
     cv2.waitKey(0)
@@ -70,13 +78,35 @@ def clahe(img, clipLimit=5.0, tileGridSize=(8,8)):
     cv2.destroyAllWindows()
     return img_clahe
 
-# Set Opening
-def opening(img, kernel = np.ones((5,5), np.uint8)):
+# Morphological Operations
+### Erosion
+def morp_op_erosion(img, kernel = np.ones((3,3), np.uint8), iter = 1):
+    img_ero = cv2.erode(img, kernel, iterations = iter)
+    cv2.imshow('Erosion', img_ero)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return img_ero
+### Dilation
+def morp_op_dilation(img, kernel = np.ones((3,3), np.uint8), iter = 1):
+    img_dil = cv2.dilate(img, kernel, iterations = iter)
+    cv2.imshow('Dilation', img_dil)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return img_dil
+### Set Opening
+def morp_op_opening(img, kernel = np.ones((9,9), np.uint8)):
     img_opn = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
     cv2.imshow('Opening', img_opn)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     return img_opn
+### Set Closing
+def morp_op_closing(img, kernel = np.ones((9,9), np.uint8)):
+    img_cls = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    cv2.imshow('Closing', img_cls)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return img_cls
 
 # Plot Histogram of image
 def plotHistogram(img):
