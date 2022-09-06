@@ -13,7 +13,7 @@ for p in paths:
     print(img.shape)
 
     img = clahe(img, clipLimit=8.0, tileGridSize=(8,8))
-    img = gaussianBlur(img, ksize=3, sigmaX=1)
+    img = gaussianBlur(img, ksize=5, sigmaX=1)
     img = sharpening(img)
     img_list = imgSlicer(img)
 
