@@ -10,11 +10,21 @@ for p in paths:
     #Read the image
     path = 'Immunofluorescence images/' + p
     img = cv2.imread(path, 0)
+    cv2.imshow('Original', img)
     print(img.shape)
 
     img = clahe(img, clipLimit=8.0, tileGridSize=(8,8))
-    img = gaussianBlur(img, ksize=5, sigmaX=1)
-    img = sharpening(img)
+    cv2.imshow('CLAHE', img)
+    img = gaussianBlur(img, ksize=5, sigmaX=3)
+    cv2.imshow('Gaussian Blur', img)
+    img = sharpening(img, 1)
+    cv2.imshow('Sharpening', img)
+    img = normalThresholding(img, thresh=50, maxval=255, type=cv2.THRESH_TOZERO)
+    cv2.imshow('TOZERO Thresholding', img)
+    img = morp_op_erosion(img, kernel=np.ones((3,3), np.uint8))
+    cv2.imshow('Closing', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     img_list = imgSlicer(img)
 
     no = 0

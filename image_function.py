@@ -30,9 +30,15 @@ def contrastAbs(img, alpha = 2, beta = -1):
     return img_con
 
 # Add more sharp in image
-def sharpening(img):
-    kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-    im = cv2.filter2D(img, -1, kernel)
+def sharpening(img, kernel):
+    kernel_1 = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+    kernel_2 = np.array([[0,-1,0], [-1,5,-1], [0,-1,0]])
+    if kernel == 1:
+        im = cv2.filter2D(img, -1, kernel_1)
+    elif kernel == 2:
+        im = cv2.filter2D(img, -1, kernel_2)
+    else:
+        return print('Kernel not found: Use 1 or 2')
     return im
 
 # Set Threshold
