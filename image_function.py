@@ -2,6 +2,12 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Plot image
+def plotImage(img, title = 'Image'):
+    cv2.imshow(title, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 # Image slicer
 def imgSlicer(img, type = 'd8'):
     # Slice ratio (base on 1920x1536)

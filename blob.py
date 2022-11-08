@@ -14,17 +14,15 @@ for p in paths:
     print(img.shape)
 
     img = clahe(img, clipLimit=8.0, tileGridSize=(8,8))
-    cv2.imshow('CLAHE', img)
+    plotImage(img, 'CLAHE')
     img = gaussianBlur(img, ksize=5, sigmaX=3)
-    cv2.imshow('Gaussian Blur', img)
+    plotImage(img, 'Gaussian Blur')
     img = sharpening(img, 1)
-    cv2.imshow('Sharpening', img)
-    img = normalThresholding(img, thresh=50, maxval=255, type=cv2.THRESH_TOZERO)
-    cv2.imshow('TOZERO Thresholding', img)
+    plotImage(img, 'Sharpening')
+    img = ostuThresholding(img, minVal=24, maxVal=255)
+    plotImage(img, 'OSTU Thresholding')
     img = morp_op_erosion(img, kernel=np.ones((3,3), np.uint8))
-    cv2.imshow('Closing', img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    plotImage(img, 'Erosion')
     img_list = imgSlicer(img)
 
     no = 0
@@ -35,4 +33,7 @@ for p in paths:
         img_with_blob = cv2.drawKeypoints(img_list[i], keypoint, None, (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         #Save the image
         cv2.imwrite('Blob detected/' + p[:-4] + '_' + str(i) + '.jpg', img_with_blob)
+        cv2.imshow('Blob detected', img_with_blob)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
     print('Total number of cells: ', no)
