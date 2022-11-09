@@ -21,4 +21,5 @@ plotImage(img, 'Sharpening')
 
 otsu, img = ostuThresholding(img, minVal=0, maxVal=255)
 plotImage(img, 'OSTU Thresholding')
-print(otsu)
+
+img = mo
