@@ -60,9 +60,9 @@ def normalThresholding(img, thresh = 127, maxval = 255, type = cv2.THRESH_TOZERO
 def gaussianBlur(img, ksize = 5, sigmaX = 0):
     blur = cv2.GaussianBlur(img, (ksize,ksize), sigmaX)
     return blur
-def ostuThresholding(img, minVal = 24, maxVal = 255, type = cv2.THRESH_BINARY + cv2.THRESH_OTSU):
-    ostu = cv2.threshold(img, minVal, maxVal, type)[1]
-    return ostu
+def ostuThresholding(img, minVal = 128, maxVal = 255):
+    ostu, output = cv2.threshold(img, minVal, maxVal, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return ostu , output
 ### CLAHE method
 def clahe(img, clipLimit=5.0, tileGridSize=(8,8)):
     clahe = cv2.createCLAHE(clipLimit=clipLimit, tileGridSize=tileGridSize)

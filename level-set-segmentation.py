@@ -9,7 +9,6 @@ from metadata_function import *
 paths = getPath('Immunofluorescence images/')
 path = 'Immunofluorescence images/' + paths[0]
 img = cv2.imread(path, 0)
-cv2.imshow('Original', img)
 print(img.shape)
 plotImage(img, 'Original')
 
@@ -20,3 +19,6 @@ plotImage(img, 'Gaussian Blur')
 img = sharpening(img, 1)
 plotImage(img, 'Sharpening')
 
+otsu, img = ostuThresholding(img, minVal=0, maxVal=255)
+plotImage(img, 'OSTU Thresholding')
+print(otsu)

@@ -19,7 +19,7 @@ for p in paths:
     plotImage(img, 'Gaussian Blur')
     img = sharpening(img, 1)
     plotImage(img, 'Sharpening')
-    img = ostuThresholding(img, minVal=24, maxVal=255)
+    otsu, img = ostuThresholding(img, minVal=24, maxVal=255)
     plotImage(img, 'OSTU Thresholding')
     img = morp_op_erosion(img, kernel=np.ones((3,3), np.uint8))
     plotImage(img, 'Erosion')
