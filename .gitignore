@@ -5,6 +5,7 @@ Desktop.ini
 # Dataset Directory
 Immunofluorescence images/**
 Blob detected/**
+Blur images/**
 
 # Thumbnail cache files
 ._*
