@@ -3,6 +3,8 @@
 Desktop.ini
 
 # Dataset Directory
+__pycache__/**
+.ipynb_checkpoints/**
 Immunofluorescence images/**
 Blob detected/**
 Blur images/**
