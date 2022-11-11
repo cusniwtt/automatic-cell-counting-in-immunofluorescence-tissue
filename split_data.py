@@ -8,13 +8,16 @@ fitc = []
 merge = []
 
 for file in tqdm(sorted(os.listdir('Immunofluorescence images'))):
-    if file.endswith('.tif'):
-        if 'DAPI' in file:
-            dapi.append(file)
-        elif 'FITC' in file:
-            fitc.append(file)
-        elif 'merge' in file:
-            merge.append(file)
+    if file.endswith('.tif.tif'):
+        os.rename('Immunofluorescence images/' + file, 'Immunofluorescence images/' + file[:-4])
+
+    if 'DAPI' in file:
+        dapi.append(file)
+    elif 'FITC' in file:
+        fitc.append(file)
+    elif 'merge' in file:
+        merge.append(file)
+
 
 print('DAPI: ', len(dapi))
 print('FITC: ', len(fitc))
