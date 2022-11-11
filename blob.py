@@ -8,6 +8,9 @@ paths = getPath('Immunofluorescence images/')
 
 for p in paths:
     #Read the image
+
+    # Fix path before run code
+
     path = 'Immunofluorescence images/' + p
     img = cv2.imread(path, 0)
     cv2.imshow('Original', img)
@@ -23,7 +26,9 @@ for p in paths:
     plotImage(img, 'OSTU Thresholding')
     img = morp_op_erosion(img, kernel=np.ones((3,3), np.uint8))
     plotImage(img, 'Erosion')
-    img_list = imgSlicer(img)
+
+    # If image not slice, run this code
+    #img_list = imgSlicer(img)
 
     no = 0
     for i in range(len(img_list)):

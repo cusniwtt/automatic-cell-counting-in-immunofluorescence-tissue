@@ -1,6 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+import os
+import fnmatch
+
+# Read image only DAPI
+def getPath(path, type='DAPI'):
+    paths = []
+    regex = '*' + type + '.tif'
+    for file in os.listdir(path):
+        if fnmatch.fnmatch(file, regex):
+            paths.append(file)
+    return paths
 
 # Plot image
 def plotImage(img, title = 'Image'):

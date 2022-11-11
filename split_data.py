@@ -1,4 +1,5 @@
 # Do first time before extract zip
+# If "Immunofluorescence images" folder is already split. Don't run this code
 import os
 from tqdm import tqdm
 
