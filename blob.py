@@ -4,14 +4,14 @@ import cv2
 from image_function import *
 from metadata_function import *
 
-paths = getPath('Immunofluorescence images/')
+paths = 'Immunofluorescence images'
 
 for p in paths:
     #Read the image
 
     # Fix path before run code
 
-    path = 'Immunofluorescence images/' + p
+    path = 'Immunofluorescence images/DAPI' + p
     img = cv2.imread(path, 0)
     cv2.imshow('Original', img)
     print(img.shape)

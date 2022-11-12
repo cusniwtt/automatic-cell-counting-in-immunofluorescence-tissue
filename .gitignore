@@ -8,6 +8,7 @@ __pycache__/**
 Immunofluorescence images/**
 Blob detected/**
 Dataset/**
+experiments/**
 
 # Thumbnail cache files
 ._*
