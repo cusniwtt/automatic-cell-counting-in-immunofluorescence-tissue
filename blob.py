@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import cv2
 from image_function import *
-from metadata_function import *
 
 paths = 'Immunofluorescence images'
 
