@@ -2,16 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os
-import fnmatch
-
-# Read image only DAPI
-def getPath(path, type='DAPI'):
-    paths = []
-    regex = '*' + type + '.tif'
-    for file in os.listdir(path):
-        if fnmatch.fnmatch(file, regex):
-            paths.append(file)
-    return paths
 
 # Plot image
 def plotImage(img, title = 'Image'):
@@ -47,7 +37,7 @@ def contrastAbs(img, alpha = 2, beta = -1):
     return img_con
 
 # Add more sharp in image
-def sharpening(img, kernel):
+def filter(img, kernel):
     kernel_1 = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
     kernel_2 = np.array([[0,-1,0], [-1,5,-1], [0,-1,0]])
     if kernel == 1:
