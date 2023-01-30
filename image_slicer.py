@@ -27,10 +27,12 @@ def imgSlicer(img, type = 'd8'):
 
 ################# Start Here #################
 # Set path
-paths = 'Immunofluorescence images/DAPI'
+paths = 'Dataset/Sample Image/'
 
-for file in tqdm(sorted(os.listdir(paths))):
-    path = paths + '/' + file
+for file in sorted(os.listdir(paths)):
+    if file == '.DS_Store':
+        continue
+    path = paths + file
     img = cv2.imread(path, 1)
     img_list = imgSlicer(img, type='d4')
 
@@ -39,7 +41,7 @@ for file in tqdm(sorted(os.listdir(paths))):
         row = init // 4
         col = init % 4
         filename = file[:-4] + '_' + str(row) + '_' + str(col) + '.png'
-        cv2.imwrite('Dataset/4x4/' + filename, each)
+        cv2.imwrite('Dataset/Sample4x4/' + filename, each)
         init += 1
         if init == 16:
             init = 0
