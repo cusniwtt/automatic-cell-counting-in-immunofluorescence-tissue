@@ -8,7 +8,9 @@ def imgSlicer(img, type = 'd8'):
     # Slice ratio (base on 1920x1536)
     slice_ratio = {
         'd2': [960, 768, 2],
+        'd3': [640, 512, 3],
         'd4': [480, 384, 4],
+        'd6': [320, 256, 6],
         'd8': [240, 192, 8],
         'd16': [120, 96, 16],
     }
@@ -28,20 +30,23 @@ def imgSlicer(img, type = 'd8'):
 ################# Start Here #################
 # Set path
 paths = 'Dataset/Sample Image/'
+split = 6
+split_type = 'd6'
+save_path = 'Dataset/Sample6x6/'
 
-for file in sorted(os.listdir(paths)):
+for file in tqdm(sorted(os.listdir(paths))):
     if file == '.DS_Store':
         continue
     path = paths + file
     img = cv2.imread(path, 1)
-    img_list = imgSlicer(img, type='d4')
+    img_list = imgSlicer(img, type=split_type)
 
     init = 0
     for each in img_list:
-        row = init // 4
-        col = init % 4
+        row = init // split
+        col = init % split
         filename = file[:-4] + '_' + str(row) + '_' + str(col) + '.png'
-        cv2.imwrite('Dataset/Sample4x4/' + filename, each)
+        cv2.imwrite(save_path + filename, each)
         init += 1
-        if init == 16:
+        if init == split**2:
             init = 0
