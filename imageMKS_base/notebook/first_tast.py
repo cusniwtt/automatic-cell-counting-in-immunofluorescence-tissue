@@ -47,6 +47,8 @@ def labelvis(A, L, bg_color='b', engine='plotly'):
     elif engine == 'PIL':
         A = PIL.Image.fromarray(A)
         A.show()
+    elif engine== 'plotly_export':
+        return A
 
 def paramcheck():
     while True:

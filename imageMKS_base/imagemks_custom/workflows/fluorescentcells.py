@@ -88,8 +88,11 @@ def default_parameters(cell_type):
 def all_measurements():
     measures = ['Cell_Index', 'Nuc_Area_um2', 'Nuc_Perimeter_um', 'Nuc_Area_Factor',
                 'Nuc_Major_L_um', 'Nuc_Minor_L_um', 'Nuc_eccentricity', 'Nuc_orientation',
-                'Nucleus_eq_diameter_um', 'Cyto_Area_um2', 'Cyto_Perimeter_um', 'Cyto_Area_Factor',
-                'Cyto_orientation', 'Cyto_Major_L_um', 'Cyto_Minor_L_um']
+                'Nucleus_eq_diameter_um']
+    '''
+    'Cyto_Area_um2', 'Cyto_Perimeter_um', 'Cyto_Area_Factor',
+                'Cyto_orientation', 'Cyto_Major_L_um', 'Cyto_Minor_L_um'
+    '''
 
     return measures
 
@@ -192,7 +195,7 @@ def segment_fluor_cells(N, C, pixel_scale, smooth_size, peak_min_dist, intensity
     return [label_N, label_C]
 
 
-def measure_fluor_cells(label_Nuc, label_Cyto, pixel_scale):
+def measure_fluor_cells(label_Nuc, pixel_scale):
     '''
     Generates measurements for labeled Nucleus images and labeled Cytoskeleton images.
 
@@ -214,7 +217,7 @@ def measure_fluor_cells(label_Nuc, label_Cyto, pixel_scale):
         Cyto_orientation, Cyto_Major_L_um, Cyto_Minor_L_um
     '''
 
-    nuc_props = regionprops(label_Nuc, coordinates='rc')
+    nuc_props = regionprops(label_Nuc)
 
     cell_index = 1
 
@@ -227,6 +230,7 @@ def measure_fluor_cells(label_Nuc, label_Cyto, pixel_scale):
         nucleus_P = nuc_props[i].perimeter * pixel_scale
         nucleus_SF = 4 * np.pi * nucleus_A / (nucleus_P**2)
 
+        '''
         cyto_props = regionprops((label_Cyto==i).astype(np.int), coordinates='rc')
 
         try:
@@ -244,23 +248,28 @@ def measure_fluor_cells(label_Nuc, label_Cyto, pixel_scale):
             cyto_orientation = None
             cyto_Major_L_um = None
             cyto_Minor_L_um = None
+        
+                        'Cyto_Area_um2': (cyto_A,),
+                        'Cyto_Perimeter_um': (cyto_P,),
+                        'Cyto_Area_Factor': (cyto_SF,),
+                        'Cyto_orientation': (cyto_orientation,),
+                        'Cyto_Major_L_um': (cyto_Major_L_um,),
+                        'Cyto_Minor_L_um': (cyto_Minor_L_um,)
+        '''
+        temp = pd.DataFrame({
+                        'Cell_Index': (cell_index,),
+                        'Nuc_Area_um2': (nucleus_A,),
+                        'Nuc_Perimeter_um': (nucleus_P,) ,
+                        'Nuc_Area_Factor': (nucleus_SF,),
+                        'Nuc_Major_L_um': (nuc_props[i].major_axis_length*pixel_scale,),
+                        'Nuc_Minor_L_um': (nuc_props[i].minor_axis_length*pixel_scale,),
+                        'Nuc_eccentricity': (nuc_props[i].eccentricity,),
+                        'Nuc_orientation': (nuc_props[i].orientation,),
+                        'Nucleus_eq_diameter_um': (nuc_props[i].equivalent_diameter*pixel_scale,),
+                    })
 
-        prop_df = prop_df.append(pd.DataFrame(
-                      {'Cell_Index': (cell_index,),
-                       'Nuc_Area_um2': (nucleus_A,),
-                       'Nuc_Perimeter_um': (nucleus_P,) ,
-                       'Nuc_Area_Factor': (nucleus_SF,),
-                       'Nuc_Major_L_um': (nuc_props[i].major_axis_length*pixel_scale,),
-                       'Nuc_Minor_L_um': (nuc_props[i].minor_axis_length*pixel_scale,),
-                       'Nuc_eccentricity': (nuc_props[i].eccentricity,),
-                       'Nuc_orientation': (nuc_props[i].orientation,),
-                       'Nucleus_eq_diameter_um': (nuc_props[i].equivalent_diameter*pixel_scale,),
-                       'Cyto_Area_um2': (cyto_A,),
-                       'Cyto_Perimeter_um': (cyto_P,),
-                       'Cyto_Area_Factor': (cyto_SF,),
-                       'Cyto_orientation': (cyto_orientation,),
-                       'Cyto_Major_L_um': (cyto_Major_L_um,),
-                       'Cyto_Minor_L_um': (cyto_Minor_L_um,)}))
+        prop_df = pd.concat([prop_df, temp], ignore_index=True)
+                    
         cell_index += 1
 
     # Reordering the columns
