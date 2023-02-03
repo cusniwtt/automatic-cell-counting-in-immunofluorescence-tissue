@@ -54,7 +54,7 @@ def default_parameters(cell_type):
         short_threshold_r, long_threshold_r, cytoskeleton_threshold_r,
         and min_size_objects.
     '''
-    if cell_type is 'muscle_progenitor':
+    if cell_type == 'muscle_progenitor':
         params = {
             'smooth_size': 3,
             'peak_min_dist': 10,
@@ -67,7 +67,7 @@ def default_parameters(cell_type):
 
         return params
 
-    elif cell_type is 'bone_stem':
+    elif cell_type == 'bone_stem':
 
         params = {
             'smooth_size': 3,
@@ -304,9 +304,9 @@ def visualize_fluor_cells(L, A, thickness=1, bg_color='b', engine='matplotlib', 
 
     A = np.array(A)
 
-    if bg_color is 'b':
+    if bg_color == 'b':
         bg_color=(0.1,0.1,0.5)
-    elif bg_color is 'g':
+    elif bg_color == 'g':
         bg_color=(0.1,0.5,0.1)
 
     A = label2rgb(L, A, bg_label=0, bg_color=bg_color, alpha=0.1, image_alpha=1)
