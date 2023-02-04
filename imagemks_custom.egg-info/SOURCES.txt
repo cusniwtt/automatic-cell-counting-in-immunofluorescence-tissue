@@ -1,3 +1,5 @@
+LICENSE
+README.md
 setup.py
 imagemks_custom/__init__.py
 imagemks_custom/__main__.py

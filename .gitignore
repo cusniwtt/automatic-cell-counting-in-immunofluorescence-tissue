@@ -9,7 +9,7 @@ Immunofluorescence images/**
 Blob detected/**
 Dataset/**
 experiments/**
-imageMKS_base/notebook/imagemks_output/**
+notebook/imagemks_output/**
 
 # Thumbnail cache files
 ._*

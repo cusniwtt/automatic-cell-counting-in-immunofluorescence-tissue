@@ -22,7 +22,7 @@ fonttools==4.38.0
 fqdn==1.5.1
 idna==3.4
 imageio==2.25.0
--e git+https://github.com/cusniwtt/Automatic-cell-counting-in-immunofluorescence-tissue.git@3e5df325a905fb09972639bc16b0a22643f82115#egg=imagemks_custom&subdirectory=imageMKS_base
+-e git+https://github.com/cusniwtt/Automatic-cell-counting-in-immunofluorescence-tissue.git@e95f393a34d27eb34d9125a2ed0c53765f510e14#egg=imagemks_custom&subdirectory=imageMKS_base
 importlib-metadata==6.0.0
 ipykernel==6.20.2
 ipython==8.9.0
@@ -94,6 +94,7 @@ threadpoolctl==3.1.0
 tifffile==2023.1.23.1
 tinycss2==1.2.1
 tornado==6.2
+tqdm==4.64.1
 traitlets==5.9.0
 uri-template==1.2.0
 wcwidth==0.2.6
