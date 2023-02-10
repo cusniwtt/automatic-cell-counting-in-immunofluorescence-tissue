@@ -10,6 +10,7 @@ Blob detected/**
 Dataset/**
 experiments/**
 notebook/imagemks_output/**
+notebook/imagemks_compare/**
 
 # Thumbnail cache files
 ._*
