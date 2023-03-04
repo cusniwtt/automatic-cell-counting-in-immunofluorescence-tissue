@@ -8,8 +8,6 @@ attrs==22.2.0
 backcall==0.2.0
 beautifulsoup4==4.11.2
 bleach==6.0.0
-certifi @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5d968ni_yn/croot/certifi_1671487774636/work/certifi
-cffi==1.15.1
 comm==0.1.2
 contourpy==1.0.7
 cycler==0.11.0
@@ -22,7 +20,6 @@ fonttools==4.38.0
 fqdn==1.5.1
 idna==3.4
 imageio==2.25.0
--e git+https://github.com/cusniwtt/Automatic-cell-counting-in-immunofluorescence-tissue.git@e95f393a34d27eb34d9125a2ed0c53765f510e14#egg=imagemks_custom&subdirectory=imageMKS_base
 importlib-metadata==6.0.0
 ipykernel==6.20.2
 ipython==8.9.0
