@@ -11,6 +11,7 @@ Dataset/**
 experiments/**
 notebook/imagemks_output/**
 notebook/imagemks_compare/**
+notebook/imagemks_compare_def_params/**
 
 # Thumbnail cache files
 ._*
